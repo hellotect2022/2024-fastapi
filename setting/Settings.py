@@ -8,7 +8,7 @@ dotenv_path = os.path.join(os.path.dirname(__file__),'dev.env')
 class Settings:
     def __init__(self):
         # Load .env file into environment variables
-        print('aa',dotenv_path)
+        #print('aa',dotenv_path)
         load_dotenv(dotenv_path)
         #Get variables from environment
         self.redis_host = os.getenv("redis_host")
