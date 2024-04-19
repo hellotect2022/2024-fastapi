@@ -1,0 +1,4 @@
+FROM mariadb:latest
+
+# 환경 변수를 설정하여 루트 패스워드를 정의합니다.
+ENV MYSQL_ROOT_PASSWORD=0000
