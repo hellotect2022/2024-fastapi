@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # find path
-dotenv_path = os.path.join(os.path.dirname(__file__),'dev.env')
+dotenv_path = os.path.join(os.path.dirname(__file__),'.dev-env')
 
 class Settings:
     def __init__(self):

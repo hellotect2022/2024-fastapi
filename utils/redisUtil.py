@@ -18,6 +18,8 @@ class RedisHelper:
                 # 예외를 로그에 기록
                 logHelper.logger.error(e)
                 #raise redis.ConnectionError("Failed to connect to Redis")
+
+    # key-value
     @staticmethod
     def setKey(key:str, value:str):
         RedisHelper.init_redis()
@@ -27,3 +29,16 @@ class RedisHelper:
     def getKey(key):
         RedisHelper.init_redis()
         return RedisHelper.rd.get(key)
+
+    # key-map
+    @staticmethod
+    def setHashMap(key,data):
+        RedisHelper.init_redis()
+        return RedisHelper.rd.hmset(key, data)
+
+    @staticmethod
+    def getHashMap(key,mapKey=None):
+        RedisHelper.init_redis()
+        if mapKey :
+            return RedisHelper.rd.hget(key,mapKey)
+        return RedisHelper.rd.hgetall(key)
