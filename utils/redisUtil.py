@@ -3,7 +3,6 @@ from setting.Settings import Settings
 from utils.logUtil import LogHelper
 
 settings = Settings()
-logHelper = LogHelper()
 
 class RedisHelper:
     rd = None
@@ -16,7 +15,7 @@ class RedisHelper:
                 self.rd.ping()
             except redis.exceptions.ConnectionError as e:
                 # 예외를 로그에 기록
-                logHelper.logger.error(e)
+                LogHelper.error(e)
                 #raise redis.ConnectionError("Failed to connect to Redis")
 
     # key-value

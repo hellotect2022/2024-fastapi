@@ -20,3 +20,5 @@ class Settings:
         self.db_user = os.getenv("db_user")
         self.db_passwd = os.getenv("db_passwd")
         self.db_database = os.getenv("db_database")
+        self.token_delta = os.getenv("delta")
+        self.token_secret = os.getenv("secret")

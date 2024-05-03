@@ -10,3 +10,6 @@ db_port=3306
 db_user=root
 db_passwd=0000
 db_database=myapi
+[token]
+delta=360000
+secret=test
