@@ -16,3 +16,7 @@ class User(BaseModel):
             if value is None:
                 user_dict[key] = ""
         return user_dict
+
+
+class Message(BaseModel):
+    context :str

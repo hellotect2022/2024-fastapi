@@ -2,7 +2,7 @@ import json
 
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
-from ..model.modelVO import User
+from ..model.modelVO import User, Message
 from database.nosql import db
 from bson import ObjectId
 from utils import RedisHelper, LogHelper
@@ -118,3 +118,8 @@ async def userLogin(user: User) -> dict:
 async def checkUserToken(token:str = Depends(authenticate)) -> dict:
     ret = {'token': token}
     return ret
+
+@router.post("/sendMessage")
+async def sendMessage(message: Message,token:str = Depends(authenticate)) -> dict:
+    RedisHelper.publish("test",message.context)
+    return {"status":"success"}

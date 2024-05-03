@@ -16,7 +16,6 @@ class RedisHelper:
             except redis.exceptions.ConnectionError as e:
                 # 예외를 로그에 기록
                 LogHelper.error(e)
-                #raise redis.ConnectionError("Failed to connect to Redis")
 
     # key-value
     @staticmethod
@@ -45,3 +44,8 @@ class RedisHelper:
             redisHash = RedisHelper.rd.hgetall(key)
             resultData = {key.decode('utf-8'): value.decode('utf-8') for key, value in redisHash.items()}
         return resultData
+
+    @staticmethod
+    def publish(redisChannel:str, message:str):
+        RedisHelper.init_redis()
+        RedisHelper.rd.publish(channel=redisChannel, message=message)
