@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <h1>WebSocket Example</h1>
+    <input type="text" id="usernameInput" placeholder="Enter your username">
+    <input type="text" id="messageInput" placeholder="Enter message">
+    <button onclick="sendMessage()">Send Message</button>
+    <div id="messageContainer"></div>
+
+    <script>
+        // WebSocket 서버 주소
+        const socket = new WebSocket('ws://10.10.27.18:7777/test');
+        let username = '';
+
+        // WebSocket 연결이 열렸을 때
+        socket.onopen = function(event) {
+            console.log('WebSocket connected');
+            setUsername();
+        };
+
+        // WebSocket 연결이 닫혔을 때
+        socket.onclose = function(event) {
+            console.log('WebSocket disconnected');
+        };
+
+        // WebSocket 메시지 수신 시
+        socket.onmessage = function(event) {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML += `<p>Received: ${event.data}</p>`;
+        };
+
+        // 메시지 전송 함수
+        function sendMessage() {
+            setUsername();
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            console.log(username + ': ' + message);
+            socket.send(username + ': ' + message);
+            messageInput.value = ''; // 메시지 전송 후 입력 필드 초기화
+        }
+
+        // 사용자 이름 설정 함수
+        function setUsername() {
+            const usernameInput = document.getElementById('usernameInput');
+            username = usernameInput.value;
+        }
+    </script>
+</body>
+</html>
