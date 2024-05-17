@@ -120,6 +120,10 @@ async def checkUserToken(token:str = Depends(authenticate)) -> dict:
     return ret
 
 @router.post("/sendMessage")
-async def sendMessage(message: Message,token:str = Depends(authenticate)) -> dict:
-    RedisHelper.publish("test",message.context)
+#async def sendMessage(message: Message,token:str = Depends(authenticate)) -> dict:
+async def sendMessage(message: Message) -> dict:
+    userList = RedisHelper.getSmembers("room:"+message.roomId)
+    print("senMessage -> ",message)
+    for user in userList:
+        RedisHelper.publish(user,message.json())
     return {"status":"success"}

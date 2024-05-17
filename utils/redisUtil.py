@@ -46,6 +46,14 @@ class RedisHelper:
         return resultData
 
     @staticmethod
+    def getSmembers(roomId):
+        RedisHelper.init_redis()
+        redisHash = {}
+        redisHash = RedisHelper.rd.smembers(roomId)
+        resultData = {user.decode('utf-8') for user in redisHash}
+        return resultData
+
+    @staticmethod
     def publish(redisChannel:str, message:str):
         RedisHelper.init_redis()
         RedisHelper.rd.publish(channel=redisChannel, message=message)

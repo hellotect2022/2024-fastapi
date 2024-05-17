@@ -19,4 +19,6 @@ class User(BaseModel):
 
 
 class Message(BaseModel):
+    roomId : str
+    userId: str
     context :str
