@@ -123,6 +123,7 @@ async def checkUserToken(token:str = Depends(authenticate)) -> dict:
 #async def sendMessage(message: Message,token:str = Depends(authenticate)) -> dict:
 async def sendMessage(message: Message) -> dict:
     userList = RedisHelper.getSmembers("room:"+message.roomId)
+    print("userList->",userList)
     print("senMessage -> ",message)
     for user in userList:
         RedisHelper.publish(user,message.json())
