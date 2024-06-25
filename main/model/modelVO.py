@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-
+import datetime
 
 class User(BaseModel):
     username: str
@@ -19,6 +19,8 @@ class User(BaseModel):
 
 
 class Message(BaseModel):
+    token: str
     roomId : str
     userId: str
+    sendDate: datetime.datetime
     context :str

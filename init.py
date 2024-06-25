@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from main.router import testRouter, apiRouter
+from main.router import testRouter, registRouter, messageRouter, userRouter
 from setting.Settings import Settings
 from utils.redisUtil import RedisHelper
 from utils.logUtil import LogHelper
@@ -11,7 +11,9 @@ import uvicorn
 app = FastAPI()
 
 app.include_router(testRouter.router,tags=["test"])
-app.include_router(apiRouter.router,tags=["api"])
+app.include_router(registRouter.router, tags=["api"])
+app.include_router(messageRouter.router, tags=["api"])
+app.include_router(userRouter.router, tags=["api"])
 
 origins = [
     "http://127.0.0.1:5173",
