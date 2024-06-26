@@ -57,3 +57,9 @@ class RedisHelper:
     def publish(redisChannel:str, message:str):
         RedisHelper.init_redis()
         RedisHelper.rd.publish(channel=redisChannel, message=message)
+
+    @staticmethod
+    def setSortedSet(key:str,parameters:dict):
+        RedisHelper.init_redis()
+        resultData = RedisHelper.rd.zadd(name=key,mapping=parameters)
+        return resultData
