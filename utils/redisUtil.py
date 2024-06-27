@@ -1,6 +1,7 @@
 import redis
 from setting.Settings import Settings
 from utils.logUtil import LogHelper
+import json
 
 settings = Settings()
 
@@ -13,6 +14,7 @@ class RedisHelper:
             try:
                 self.rd = redis.StrictRedis(host=settings.redis_host, port=int(settings.redis_port), db=0)
                 self.rd.ping()
+               # self.rd.zrev
             except redis.exceptions.ConnectionError as e:
                 # 예외를 로그에 기록
                 LogHelper.error(e)
@@ -39,11 +41,12 @@ class RedisHelper:
         RedisHelper.init_redis()
         redisHash = {}
         if mapKey :
-            redisHash = RedisHelper.rd.hget(key,mapKey)
+            redisHash = json.loads(RedisHelper.rd.hget(key,mapKey))
+            return redisHash
         else :
             redisHash = RedisHelper.rd.hgetall(key)
             resultData = {key.decode('utf-8'): value.decode('utf-8') for key, value in redisHash.items()}
-        return resultData
+            return resultData
 
     @staticmethod
     def getSmembers(roomId):
@@ -62,4 +65,10 @@ class RedisHelper:
     def setSortedSet(key:str,parameters:dict):
         RedisHelper.init_redis()
         resultData = RedisHelper.rd.zadd(name=key,mapping=parameters)
+        return resultData
+
+    @staticmethod
+    def getSortedSet(key: str, min_score: str, max_score: str):
+        RedisHelper.init_redis()
+        resultData = RedisHelper.rd.zrevrangebyscore(name=key, min=min_score, max=max_score,withscores=True,start=0, num=100)
         return resultData
